@@ -16,12 +16,6 @@
                  (into [] res)))]
     (t/render (t/index {:videos vids}))))
 
-(defpage [:get "/leaderboard"] []
-  (let [vids (sql/with-connection db-url
-               (sql/with-query-results res [query-by-votes]
-                 (into [] res)))]
-    (t/render (t/index {:videos vids}))))
-
 (defpage [:post "/"] {:keys [vidid]}
   (sql/with-connection db-url
     (let [video-id (try (Integer/parseInt vidid)
@@ -39,10 +33,16 @@
            {:votes (inc vote-count)})
           {:status 200 :body ""})))))
 
+(defpage [:get "/leaderboard"] []
+  (let [vids (sql/with-connection db-url
+               (sql/with-query-results res [query-by-votes]
+                 (into [] res)))]
+    (t/render (t/index {:videos vids :ldr true}))))
+
 (defn -main
-  []
+  [passed-port]
   (let [port (try
-               (Integer/parseInt (System/getenv "PORT"))
+               (Integer/parseInt passed-port)
                (catch Exception exc
                  8080))]
     (server/start port)))

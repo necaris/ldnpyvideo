@@ -1,3 +1,3 @@
 
-web: lein run -m ldnpyvideo.server $PORT
+web: lein run -m ldnpyvideo.core $PORT
 
