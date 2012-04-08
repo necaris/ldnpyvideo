@@ -1,0 +1,90 @@
+body {
+    background: #EEE;
+    color: #010;
+    font-family: "Oxygen", sans-serif;
+    max-width: 840px;
+    margin: 0 auto;
+}
+
+h2 {
+    text-align: center;
+    font-family: "Ubuntu", sans-serif;
+}
+
+#links {
+    text-align: center;
+    font-size: 110%;
+    font-family: "Ubuntu", sans-serif;
+}
+
+#links a {
+    color: #999;
+    text-decoration: none;
+}
+
+#links a:hover {
+    color: #CCC;
+}
+
+#videos {
+    list-style-type: none;
+    margin: 0 auto; padding: 0;
+    max-width: 800px;
+}
+
+.video {
+    list-style-type: none;
+    margin: 0; padding: 0;
+}
+
+.vid-entry {
+    /* border: 1px solid #0F0; */
+    margin: 8px; padding: 12px;
+    min-height: 90px;
+}
+
+.vid-title {
+    font-size: 110%;
+    color: #333;
+    padding: 4px; margin: 1px;
+    font-family: "Ubuntu", sans-serif;
+}
+
+.vid-title:hover {
+    color: #999;
+}
+
+.vid-speakers {
+    font-style: italic;
+    font-size: 95%;
+    color: #888;
+    margin-left: 4px;
+} 
+
+.vid-summary {
+    font-size: 95%;
+    margin: 0; margin-top: 2px;
+    padding: 2px; padding-left: 4px;
+}
+
+.vid-votes {
+    /* border: 1px solid #F00; */
+    float: left;
+    text-align: center;
+    margin: 2px 6px; padding: 0;
+}
+
+.vid-vote-count {
+    color: #AAA;
+    font-size:64px;
+    margin: 0; padding: 0;
+    min-width: 84px;
+}
+
+.vid-vote-btn {
+    background: #000;
+    color: #FFF;
+    border: 1px solid #FFF;
+    font-size: 95%;
+    margin: 0; padding: 4px;
+}
