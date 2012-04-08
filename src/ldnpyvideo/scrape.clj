@@ -104,3 +104,6 @@
      (map get-talk-data (get-talk-urls listing-page)))
     ;; (println "Inserted")
     ))
+
+(defn -main
+  (refresh))
