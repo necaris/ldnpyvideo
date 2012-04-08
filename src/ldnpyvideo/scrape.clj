@@ -87,7 +87,7 @@
     (sql/with-connection db-url
       (apply sql/insert-records :data formatted-recs))))
 
-(defn refresh
+(defn -main
   []
   (let [listing-page (fetch-url (str video-root video-cat))]
     ;; (println "Dropping any existing data")
@@ -104,6 +104,3 @@
      (map get-talk-data (get-talk-urls listing-page)))
     ;; (println "Inserted")
     ))
-
-(defn -main
-  (refresh))
