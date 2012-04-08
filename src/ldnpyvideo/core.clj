@@ -3,4 +3,5 @@
 
 (defn -main
   []
-  (scrape/main))
+  (scrape/refresh))
+

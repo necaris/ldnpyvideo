@@ -6,14 +6,6 @@
                  [postgresql/postgresql "9.1-901.jdbc4"]
                  [org.clojure/java.jdbc "0.1.1"]]
   :plugins [[lein-cljsbuild "0.1.2"]]
-  :cljsbuild
-  {:builds
-   [{:source-path "src-cljs",
-     :compiler
-     {:output-dir "resources/public/cljs/",
-      :output-to "resources/public/cljs/main.js",
-      :optimizations :simple,
-      :pretty-print true}}]}
   :main ldnpyvideo.core)
 
                          

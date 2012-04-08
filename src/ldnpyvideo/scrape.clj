@@ -52,7 +52,7 @@
         metadata (process-metadata (zipmap metakeys metavals))
         origin (metadata :origin)
         speakers (metadata :speakers)]
-    ;; (println
+    (println (str "Loaded: " title))
     ;;  (str "TITLE: " title "\n")
     ;;  (str "SUMMARY: " summary "\n")
     ;;  (str "ORIGIN: " origin "\n")
@@ -62,32 +62,45 @@
 (defn create-data-table
   []
   (sql/with-connection db-url
-    (sql/create-table
-     :data
-     [:id "SERIAL"]
-     [:title "VARCHAR(255)"]
-     [:summary :text]
-     [:origin "VARCHAR(255)"]
-     [:speakers "VARCHAR(255)"]
-     [:votes "INT NOT NULL"])))
+    (try
+      (sql/create-table :data
+                        [:id "SERIAL"]
+                        [:title "VARCHAR(255)"]
+                        [:summary :text]
+                        [:origin "VARCHAR(255)"]
+                        [:speakers "VARCHAR(255)"]
+                        [:votes "INT NOT NULL"])
+      (catch Exception exc
+        ;; If it throws an exception creating the table, assume that's because
+        ;; the table's already been created
+        nil))))
 
 (defn format-record
   [r]
-  (let [speakers (:speakers r)
-        s-string (interleave speakers (repeat (count speakers) ", "))]
-    (assoc r :speakers s-string)))
+  (let [spkrs (:speakers r)
+        spkr-string (apply str (interpose ", " spkrs))]
+    (merge r {:speakers spkr-string :votes 0})))
 
 (defn insert-records
   [recs]
+  (let [formatted-recs (into [] (map format-record recs))]
     (sql/with-connection db-url
-      (sql/insert-records
-       (map format-record recs))))
+      (apply sql/insert-records :data formatted-recs))))
 
-(defn scrape-and-insert
+(defn refresh
   []
   (let [listing-page (fetch-url (str video-root video-cat))]
-    (println "Creating table")
+    ;; (println "Dropping any existing data")
+    (try
+      (sql/with-connection db-url
+        (sql/drop-table :data))
+      (catch Exception exc
+        ;; Assume table doesn't exist, so doesn't need dropping
+        nil))
+    ;; (println "Creating table")
     (create-data-table)
-    (println "FETCHED DATA -- getting talk info")
-    (insert-records (map get-talk-data (get-talk-urls listing-page)))
-    (println "INSERTED")))
+    ;; (println "Getting talk info")
+    (insert-records
+     (map get-talk-data (get-talk-urls listing-page)))
+    ;; (println "Inserted")
+    ))
