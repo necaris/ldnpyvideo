@@ -1,6 +1,6 @@
 # ldnpyvideo
 
-Scraper (from pyvideo.org) and web site for London PyCon video meetup.
+Scraper (from pyvideo.org) and web site for London PyCon video meetup. Yes, I am aware of the oddity of writing a Python-related web app in Clojure.
 
 ## Usage
 
