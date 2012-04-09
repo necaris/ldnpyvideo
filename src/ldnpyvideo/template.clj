@@ -13,13 +13,13 @@
   [:button.vid-vote-btn] (if (nil? (get context :ldr))
                            (html/set-attr :id (str "video-btn-" (:id context)))
                            (fn [node] {:tag :p}))
-  [:p#notice] (if (nil? (get context :ldr))
-                identity
-                (fn [node] nil))
   )
 
 (html/deftemplate index "templates/main.html"
   [context]
+  [:p#notice] (if (nil? (get context :ldr))
+                identity
+                (fn [node] nil))
   [:#videos] (html/content
               (map
                #(video-snippet (merge {:ldr (get context :ldr)} %))
