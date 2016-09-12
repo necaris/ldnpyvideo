@@ -3,9 +3,9 @@
   (:require [clojure.java.jdbc :as sql])
   (:import java.net.URL))
 
-(def video-root "http://pyvideo.org")
+(def video-root "http://web.archive.org")
 
-(def video-cat "/category/17/pycon-us-2012")
+(def video-cat "/web/20120919215756/http://pyvideo.org/category/17/pycon-us-2012")
 
 (def db-url (System/getenv "DATABASE_URL"))
 
@@ -90,19 +90,19 @@
 (defn refresh-all
   []
   (let [listing-page (fetch-url (str video-root video-cat))]
-    ;; (println "Dropping any existing data")
+    (println "Dropping any existing data")
     (try
       (sql/with-connection db-url
         (sql/drop-table :data))
       (catch Exception exc
         ;; Assume table doesn't exist, so doesn't need dropping
         nil))
-    ;; (println "Creating table")
+    (println "Creating table")
     (create-data-table)
-    ;; (println "Getting talk info")
+    (println "Getting talk info")
     (insert-records
      (map get-talk-data (get-talk-urls listing-page)))
-    ;; (println "Inserted")
+    (println "Inserted")
     ))
 
 (defn -main
